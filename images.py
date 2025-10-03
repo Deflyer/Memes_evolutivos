@@ -76,7 +76,6 @@ def baixar_imagem_da_url(url_imagem, caminho_destino, nome_arquivo):
     except Exception as e:
         print(f"Erro ao baixar a imagem {url_imagem}: {e}")
 
-# --- Exemplo de uso ---
 if __name__ == "__main__":
     TERMO_BUSCA = "figurinha"
     TOTAL_IMAGENS_DESEJADO = 100

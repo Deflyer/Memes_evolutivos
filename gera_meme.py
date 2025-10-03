@@ -11,7 +11,7 @@ def show_image_and_play_audio(image_path, audio_path):
     pygame.mixer.music.load(audio_path)
     pygame.mixer.music.play()
 
-    nota = ""  # armazena os dígitos que o usuário digitar
+    nota = "" 
     running = True
     while running:
         screen.blit(image, (0, 0))
@@ -20,8 +20,6 @@ def show_image_and_play_audio(image_path, audio_path):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-            # Captura teclas
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:  # Enter finaliza nota
                     running = False
@@ -30,10 +28,6 @@ def show_image_and_play_audio(image_path, audio_path):
                 elif event.unicode.isdigit():  # só aceita números
                     nota += event.unicode
 
-        # Se o áudio terminar sem nota, também encerra
-        if not pygame.mixer.music.get_busy():
-            running = False
-
     pygame.quit()
     return nota if nota != "" else None
 
@@ -41,14 +35,3 @@ def show_image_and_play_audio(image_path, audio_path):
 def avaliar_meme(image_path, audio_path):
     nota = show_image_and_play_audio(image_path, audio_path)
     return nota
-
-
-nota = avaliar_meme(
-    "/home/art/projetos/evolutivos/imagens/figurinha_2.jpg",
-    "/home/art/projetos/evolutivos/audios/1-2-3-4-flamengo.mp3"
-)
-
-if nota:
-    print(f"Você deu nota {nota} para o meme.")
-else:
-    print("Você não deu nota para o meme.")
