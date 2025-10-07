@@ -1,9 +1,19 @@
 import pygame
 
-def show_image_and_play_audio(image_path, audio_path):
+def _scale_to_fit(surface, target_size):
+    tw, th = target_size
+    sw, sh = surface.get_size()
+    scale = min(tw / sw, th / sh)
+    new_size = (max(1, int(sw * scale)), max(1, int(sh * scale)))
+    scaled = pygame.transform.smoothscale(surface, new_size)
+    x = (tw - new_size[0]) // 2
+    y = (th - new_size[1]) // 2
+    return scaled, (x, y)
+
+def show_image_and_play_audio(image_path, audio_path, target_size=(640, 640)):
     pygame.init()
     image = pygame.image.load(image_path)
-    screen = pygame.display.set_mode(image.get_size())
+    screen = pygame.display.set_mode(target_size)
     pygame.display.set_caption("Meme Player")
 
     # Carregar áudio
@@ -14,7 +24,9 @@ def show_image_and_play_audio(image_path, audio_path):
     nota = "" 
     running = True
     while running:
-        screen.blit(image, (0, 0))
+        screen.fill((0, 0, 0))
+        scaled, pos = _scale_to_fit(image, target_size)
+        screen.blit(scaled, pos)
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -32,6 +44,6 @@ def show_image_and_play_audio(image_path, audio_path):
     return nota if nota != "" else None
 
 
-def avaliar_meme(image_path, audio_path):
-    nota = show_image_and_play_audio(image_path, audio_path)
+def avaliar_meme(image_path, audio_path, target_size=(640, 640)):
+    nota = show_image_and_play_audio(image_path, audio_path, target_size)
     return nota
