@@ -35,10 +35,11 @@ EMBEDDING_STATS = {
 
 def criar_meme_aleatorio():
     img_idx = np.random.randint(len(df_imagens))
-    img_embedding = df_imagens.iloc[img_idx].drop(columns=['filename']).values
+    img_embedding = df_imagens.filter(like='dim_').iloc[img_idx].astype(float).values
     aud_idx = np.random.randint(len(df_audios))
-    aud_embedding = df_audios.iloc[aud_idx].drop(columns=['filename']).values
+    aud_embedding = df_audios.filter(like='dim_').iloc[aud_idx].astype(float).values
     return img_idx, aud_idx, img_embedding, aud_embedding
+
 def mutate(embedding, embedding_type):
     if random.random() < taxa_mutacao:
         # Fazer uma cópia para não modificar o original
@@ -76,9 +77,15 @@ def mutate(embedding, embedding_type):
     return embedding
 
 def cruzar_memes(parents):
+    print(len(parents[0][2]))
+    print(type(parents[0][2][0]))
+    print((parents[0][2][1]))
+    print(len(parents[1][2]))
+    print("abacate")
     # Cruzamento de genes, ou a média, ou partes aleatórias dos genes dos pais
     if(random.random() < 0.5):
         img_mean = np.mean([parents[0][2], parents[1][2]], axis=0)
+        print(len(img_mean))
         aud_mean = np.mean([parents[0][3], parents[1][3]], axis=0)
     else:
         img_mean = np.array([random.choice([a, b]) for a, b in zip(parents[0][2], parents[1][2])])
@@ -111,14 +118,16 @@ for geracao in range(num_geracoes):
     print(f"\n=== Geração {geracao+1} ===")
     avaliacoes = []
 
-    for idx, (img_idx, aud_idx, __, __) in enumerate(populacao):
+    for idx, (img_idx, aud_idx, img_emb, aud_emb) in enumerate(populacao):
         print(aud_idx)
         print(img_idx)
+        print((img_emb[0]))
+        print(type(img_emb[0]))
         img_file = df_imagens.iloc[img_idx]['filename']
         aud_file = df_audios.iloc[aud_idx]['filename']
         print(f"Meme {idx+1} com img {img_file} e audio {aud_file}")
         nota = avaliar_meme("./imagens/" + img_file, "./audios/" +aud_file)
-        avaliacoes.append((nota, (img_idx, aud_idx)))
+        avaliacoes.append((nota, (img_idx, aud_idx, img_emb, aud_emb)))
 
     avaliacoes.sort(key=lambda x: float(x[0]), reverse=True)
     top = [ind for __, ind in avaliacoes[:tam_populacao // 2]]
