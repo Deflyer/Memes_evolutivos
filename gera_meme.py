@@ -12,16 +12,19 @@ def _scale_to_fit(surface, target_size):
 
 def show_image_and_play_audio(image_path, audio_path, target_size=(640, 640)):
     pygame.init()
-    image = pygame.image.load(image_path)
+    # A linha abaixo deve vir ANTES de carregar e converter a imagem
     screen = pygame.display.set_mode(target_size)
     pygame.display.set_caption("Meme Player")
+
+    # Agora você pode carregar a imagem e convertê-la
+    image = pygame.image.load(image_path).convert_alpha()
 
     # Carregar áudio
     pygame.mixer.init()
     pygame.mixer.music.load(audio_path)
     pygame.mixer.music.play()
 
-    nota = "" 
+    nota = ""
     running = True
     while running:
         screen.fill((0, 0, 0))
@@ -41,8 +44,7 @@ def show_image_and_play_audio(image_path, audio_path, target_size=(640, 640)):
                     nota += event.unicode
 
     pygame.quit()
-    return nota if nota != "" else None
-
+    return float(nota) if nota != "" else None
 
 def avaliar_meme(image_path, audio_path, target_size=(640, 640)):
     nota = show_image_and_play_audio(image_path, audio_path, target_size)
