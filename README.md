@@ -6,7 +6,7 @@ Participantes do grupo:
 - Artur De Vlieger Lima - 13671574
 - Pedro Augusto Monteiro Delgado - 13672766
 
-## 📋 Sobre o Projeto
+## Sobre o Projeto
 
 Este projeto implementa um algoritmo evolutivo que utiliza **embeddings** (representações numéricas) de imagens e áudios para criar combinações de memes. O algoritmo evolui baseado nas avaliações do usuário, aplicando conceitos de algoritmos genéticos como mutação, crossover e seleção natural.
 
@@ -21,7 +21,7 @@ O algoritmo evolui esses embeddings através de:
 2. **Crossover**: Combina características de dois memes "pais" para criar um "filho"
 3. **Seleção**: Memes com melhores avaliações têm maior chance de se reproduzir
 
-## 🚀 Como Funciona
+## Como Funciona
 
 ### 1. Inicialização
 - O sistema carrega embeddings pré-calculados de imagens e áudios
@@ -61,7 +61,7 @@ Seleciona uma das duas formas abaixo
 - **Estratégia Elitista**: O melhor meme sempre se reproduz, gerando metade da população de filhos  com o restante da população
 - **Seleção Proporcional**: Outros memes têm chance de reprodução proporcional à sua nota em relação ao total
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 Memes_evolutivos-master/
@@ -75,7 +75,7 @@ Memes_evolutivos-master/
 └── audios/               # Pasta com áudios
 ```
 
-## 🎮 Como Usar
+## Como Usar
 
 ### Pré-requisitos
 
@@ -107,7 +107,7 @@ python evolutivo.py
    - Exibe estatísticas: melhor, média e pior fitness
    - Acessível via botão "Ver Gráfico" na tela de resultados
 
-## 🔬 Detalhes Técnicos
+## Detalhes Técnicos
 
 ### Embeddings
 
@@ -155,7 +155,7 @@ Aqui, mutação pode causar a escolha do segundo ou terceiro amis próximo ao in
 - **Taxa de Mutação Máxima**: 0.5 (50%)
 - **Limite de Estagnação**: 3 gerações sem melhoria
 
-## 📊 Visualizações
+## Visualizações
 
 ### Tabela Top 3
 - Exibida durante a classificação
@@ -168,7 +168,7 @@ Aqui, mutação pode causar a escolha do segundo ou terceiro amis próximo ao in
 - Eixo Y: Nota média
 - Estatísticas: melhor, média e pior fitness
 
-## 🛠️ Scripts Auxiliares
+## Scripts Auxiliares
 
 ### `images.py`
 Script para coletar imagens do Pinterest:
@@ -189,6 +189,7 @@ python sons.py
 - Baixa arquivos MP3 automaticamente
 
 **Nota**: Estes scripts são opcionais e usados apenas para criar o dataset inicial ou adicionar mais sons. Ainda é preciso gerar os embeddings com o código presente n ogoogle colab linkado acima.
+
 
 
 
