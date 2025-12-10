@@ -1,3 +1,19 @@
+"""
+Coleta de Imagens do Pinterest
+================================
+
+Script utilitário para coletar imagens do Pinterest usando web scraping com Selenium.
+Permite buscar imagens por termo e baixar em lote para uso no sistema de memes evolutivos.
+
+Funcionalidades:
+- Busca de imagens no Pinterest por termo
+- Scroll automático para carregar mais resultados
+- Download de imagens em alta resolução
+- Organização automática em pasta de destino
+
+Nota: Este script é opcional e usado apenas para coletar o dataset inicial de imagens.
+"""
+
 import os
 import time
 import requests
