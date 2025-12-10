@@ -1,6 +1,6 @@
 # Memes Evolutivos 🧬
 
-Sistema de geração evolutiva de memes que combina imagens e áudios usando algoritmos genéticos. O sistema aprende com as avaliações do usuário para evoluir e criar memes cada vez melhores.
+Sistema de geração evolutiva de memes que combina imagens e áudios usando algoritmos genéticos. O sistema aprende com as avaliações do usuário para evoluir e criar memes cada vez melhores. Projeto da Disciplina SSC0713 - Sistemas Evolutivos e Aplicados à Robótica. 
 
 ## 📋 Sobre o Projeto
 
@@ -178,41 +178,8 @@ python sons.py
 - Baixa arquivos MP3 automaticamente
 
 **Nota**: Estes scripts são opcionais e usados apenas para criar o dataset inicial.
-
-## 🎨 Interface
-
-A interface foi projetada com foco em:
-- **Minimalismo**: Design limpo e moderno
-- **Usabilidade**: Botões grandes e intuitivos
-- **Feedback Visual**: Efeitos hover e animações suaves
-- **Informação Clara**: Top 3 sempre visível, gráficos acessíveis
-
-## 📈 Evolução e Aprendizado
-
-O sistema aprende através de:
-1. **Feedback do Usuário**: Cada avaliação guia a evolução
-2. **Seleção Natural**: Melhores memes se reproduzem mais
-3. **Diversidade Genética**: Múltiplas estratégias de crossover
-4. **Adaptação**: Taxa de mutação ajusta-se automaticamente
-
-## 🔮 Possíveis Melhorias
-
-- [ ] Suporte a múltiplos usuários e avaliações colaborativas
-- [ ] Exportação de memes gerados
-- [ ] Histórico de evolução mais detalhado
-- [ ] Diferentes estratégias de seleção
-- [ ] Interface web
-- [ ] Machine learning para prever combinações promissoras
-
-## 📝 Licença
-
-Este projeto é um exemplo educacional de algoritmos evolutivos aplicados à geração de conteúdo.
-
-## 👤 Autor
-
-Projeto desenvolvido para demonstrar conceitos de algoritmos genéticos e evolução computacional.
-
 ---
 
 **Divirta-se criando memes evolutivos! 🎭**
+
 
