@@ -2,6 +2,10 @@
 
 Sistema de geração evolutiva de memes que combina imagens e áudios usando algoritmos genéticos. O sistema aprende com as avaliações do usuário para evoluir e criar memes cada vez melhores. Projeto da Disciplina SSC0713 - Sistemas Evolutivos e Aplicados à Robótica. 
 
+Participantes do grupo:
+- Artur De Vlieger Lima - 13671574
+- Pedro Augusto Monteiro Delgado - 13672766
+
 ## 📋 Sobre o Projeto
 
 Este projeto implementa um algoritmo evolutivo que utiliza **embeddings** (representações numéricas) de imagens e áudios para criar combinações de memes. O algoritmo evolui baseado nas avaliações do usuário, aplicando conceitos de algoritmos genéticos como mutação, crossover e seleção natural.
@@ -181,5 +185,6 @@ python sons.py
 ---
 
 **Divirta-se criando memes evolutivos! 🎭**
+
 
 
