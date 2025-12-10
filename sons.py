@@ -1,3 +1,19 @@
+"""
+Coleta de Sons do Myinstants
+==============================
+
+Script utilitário para coletar sons de efeitos sonoros do site Myinstants usando web scraping
+com Selenium. Permite baixar sons em lote para uso no sistema de memes evolutivos.
+
+Funcionalidades:
+- Navegação automática no site Myinstants
+- Scroll automático para carregar mais resultados
+- Download automático de arquivos MP3
+- Organização automática em pasta de destino
+
+Nota: Este script é opcional e usado apenas para coletar o dataset inicial de áudios.
+"""
+
 import os
 import time
 from selenium import webdriver

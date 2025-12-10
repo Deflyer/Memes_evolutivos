@@ -1,6 +1,24 @@
+"""
+Algoritmo Evolutivo para Geração de Memes
+==========================================
+
+Este módulo implementa o algoritmo evolutivo que combina imagens e áudios para criar memes.
+O algoritmo utiliza embeddings (representações numéricas) de imagens e áudios, aplicando
+operações genéticas (mutação e crossover) para evoluir combinações baseadas nas avaliações
+do usuário.
+
+Funcionalidades principais:
+- Criação de população inicial de memes aleatórios
+- Mutação de embeddings (imagem e áudio) com diferentes estratégias
+- Crossover entre memes para gerar novos indivíduos
+- Seleção baseada em fitness (notas do usuário)
+- Geração de novas populações com estratégia elitista
+- Ajuste adaptativo da taxa de mutação baseado em estagnação
+"""
+
 import pandas as pd
 import numpy as np
-from gera_meme import avaliar_meme
+from gera_meme import avaliar_meme, show_results_screen
 from scipy.spatial.distance import cdist
 import random
 tam_populacao = 10
@@ -164,6 +182,34 @@ def gerar_nova_populacao(avaliacoes):
             
     return nova_populacao
 
+def obter_top3_memes(dicionario_notas):
+    """Retorna os top 3 memes com suas informações"""
+    if not dicionario_notas:
+        return []
+    
+    # Criar lista de memes com suas notas
+    memes_com_notas = []
+    for (img_idx, aud_idx), nota in dicionario_notas.items():
+        # Ignorar apenas memes pulados (None)
+        if nota is not None:
+            try:
+                img_file = df_imagens.iloc[img_idx]['filename']
+                aud_file = df_audios.iloc[aud_idx]['filename']
+                memes_com_notas.append({
+                    'nota': nota,
+                    'img_idx': img_idx,
+                    'aud_idx': aud_idx,
+                    'img_file': img_file,
+                    'aud_file': aud_file
+                })
+            except (IndexError, KeyError):
+                # Se houver erro ao acessar os dados, pular este meme
+                continue
+    
+    # Ordenar por nota (maior primeiro) e pegar top 3
+    memes_com_notas.sort(key=lambda x: x['nota'], reverse=True)
+    return memes_com_notas[:3]
+
 if __name__ == "__main__":
     populacao = [criar_meme_aleatorio() for _ in range(tam_populacao)]
 
@@ -171,11 +217,25 @@ if __name__ == "__main__":
     fitness_history = []
     geracoes_sem_melhora = 0
     melhor_fitness_global = -1.0
+    encerrar_programa = False
+    
     for geracao in range(num_geracoes):
+        if encerrar_programa:
+            print("Programa encerrado pelo usuário.")
+            break
+            
+        print(f"\n=== Geração {geracao + 1}/{num_geracoes} ===")
         quant_repet = 0
         avaliacoes = []
         notas = []
+        
+        # Obter top 3 memes para mostrar na interface
+        top3_memes = obter_top3_memes(dicionario_notas)
+        
         for idx, (img_idx, aud_idx, img_emb, aud_emb) in enumerate(populacao):
+            if encerrar_programa:
+                break
+                
             meme_id = (img_idx, aud_idx)
 
             if meme_id in dicionario_notas:
@@ -186,13 +246,55 @@ if __name__ == "__main__":
                 img_file = df_imagens.iloc[img_idx]['filename']
                 aud_file = df_audios.iloc[aud_idx]['filename']
                 print(f"Meme {idx+1} com img {img_file} e audio {aud_file}")
-                nota = avaliar_meme("./imagens/" + img_file, "./audios/" +aud_file)
-                dicionario_notas[meme_id] = nota
-            notas.append(nota)
-            avaliacoes.append([nota, img_idx, aud_idx, img_emb, aud_emb])
+                
+                # Atualizar top 3 antes de mostrar
+                top3_memes = obter_top3_memes(dicionario_notas)
+                
+                nota, encerrar = avaliar_meme("./imagens/" + img_file, "./audios/" + aud_file, top3_memes)
+                
+                if encerrar:
+                    if encerrar == "show_results":
+                        # Calcular fitness parcial da geração atual antes de mostrar resultados
+                        if notas and len(notas) > 0:
+                            notas_parciais = np.array(notas, dtype=float)
+                            fitness_parcial = notas_parciais.mean()
+                            fitness_history.append(fitness_parcial)
+                        
+                        # Mostrar tela de resultados com gráfico de fitness
+                        top3_final = obter_top3_memes(dicionario_notas)
+                        encerrar_programa = show_results_screen(top3_final, fitness_history)
+                    else:
+                        encerrar_programa = True
+                    break
+                
+                if nota is not None:
+                    dicionario_notas[meme_id] = nota
+                    print(f"Nota atribuída: {nota}")
+                else:
+                    print("Meme pulado (sem nota)")
+                    # Marcar como pulado para não mostrar novamente
+                    dicionario_notas[meme_id] = None
+                    # Atribuir nota mínima para manter a população estável
+                    nota = 0.0
+                    dicionario_notas[meme_id] = 0.0
+            
+            # Adicionar à avaliação (mesmo que seja 0.0 se foi pulado)
+            if nota is not None:
+                notas.append(nota)
+                avaliacoes.append([nota, img_idx, aud_idx, img_emb, aud_emb])
+        
+        if encerrar_programa:
+            break
+        
+        if not avaliacoes:
+            print("Nenhuma avaliação válida nesta geração. Pulando...")
+            continue
+            
         notas_np_array = np.array(notas, dtype=float) 
         fitness_atual = notas_np_array.mean()
         fitness_history.append(fitness_atual)
+        
+        print(f"Fitness médio da geração: {fitness_atual:.2f}")
 
         populacao = gerar_nova_populacao(avaliacoes)
 
@@ -207,3 +309,18 @@ if __name__ == "__main__":
             taxa_mutacao += incremento_mutacao * max(geracoes_sem_melhora,1)
             taxa_mutacao = min(taxa_mutacao, taxa_mutacao_maxima)
             geracoes_sem_melhora = 0
+            print(f"Taxa de mutação ajustada para: {taxa_mutacao:.2f}")
+    
+    # Mostrar top 3 final (se não foi mostrado na tela de resultados)
+    if not encerrar_programa:
+        print("\n=== TOP 3 MEMES FINAIS ===")
+        top3_final = obter_top3_memes(dicionario_notas)
+        for i, meme in enumerate(top3_final):
+            print(f"{i+1}. {meme['img_file']} + {meme['aud_file']} - Nota: {meme['nota']:.2f}")
+        
+        # Mostrar gráfico de fitness no final se não foi mostrado
+        if fitness_history:
+            print("\n=== HISTÓRICO DE FITNESS ===")
+            print(f"Melhor fitness: {max(fitness_history):.2f}")
+            print(f"Fitness médio: {sum(fitness_history)/len(fitness_history):.2f}")
+            print(f"Pior fitness: {min(fitness_history):.2f}")
