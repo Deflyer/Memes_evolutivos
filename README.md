@@ -52,13 +52,14 @@ A taxa de mutação é ajustada dinamicamente:
 - Limita-se a um máximo para evitar mutações excessivas
 
 #### Crossover
+
+Seleciona uma das duas formas abaixo
 - **Média**: Calcula a média dos embeddings dos pais
 - **Seleção Aleatória**: Escolhe aleatoriamente valores de cada pai
 
 #### Seleção
-- **Estratégia Elitista**: O melhor meme sempre se reproduz
-- **Seleção Proporcional**: Outros memes têm chance de reprodução proporcional à sua nota
-- **Diversidade**: Evita repetição de casais para manter diversidade genética
+- **Estratégia Elitista**: O melhor meme sempre se reproduz, gerando metade da população de filhos  com o restante da população
+- **Seleção Proporcional**: Outros memes têm chance de reprodução proporcional à sua nota em relação ao total
 
 ## 📁 Estrutura do Projeto
 
@@ -92,7 +93,7 @@ python evolutivo.py
 
 1. **Avaliação de Memes**:
    - Observe a imagem e ouça o áudio
-   - Classifique o meme de 1 a 10 usando os botões
+   - Classifique o meme de 1 a 10 usando os botões, recomenda-se começar com notas baixas e só dar uma nota maior quando um meme superar sua maior nota até agora
    - Use "Pular" para não avaliar um meme
    - Veja o Top 3 memes atualizados em tempo real
 
@@ -111,8 +112,12 @@ python evolutivo.py
 ### Embeddings
 
 Os embeddings são representações vetoriais de alta dimensão que capturam características semânticas:
-- **Imagens**: Embeddings extraídos de modelos de deep learning (ex: CLIP, ResNet)
-- **Áudios**: Embeddings extraídos de modelos de processamento de áudio
+- **Imagens**: Embeddings extraídos de modelos de deep learning (CLIP)
+- **Áudios**: Embeddings extraídos de modelos de deep learning (CLAP)
+
+O código para extração de embeddings encontra-se no colab abaixo
+
+[link do colab](https://colab.research.google.com/drive/1m1YuceUPp6aGf2UE9lVKAijuvFT6Wyb2?usp=sharing)
 
 ### Operações Genéticas
 
@@ -139,6 +144,8 @@ Após gerar novos embeddings, o sistema encontra os arquivos reais mais próximo
 distância = ||embedding_gerado - embedding_arquivo||
 arquivo_escolhido = arquivo_com_menor_distância
 ```
+Aqui, mutação pode causar a escolha do segundo ou terceiro amis próximo ao invés do primeiro
+
 
 ### Parâmetros do Algoritmo
 
@@ -181,7 +188,8 @@ python sons.py
 - Coleta URLs de sons
 - Baixa arquivos MP3 automaticamente
 
-**Nota**: Estes scripts são opcionais e usados apenas para criar o dataset inicial.
+**Nota**: Estes scripts são opcionais e usados apenas para criar o dataset inicial ou adicionar mais sons. Ainda é preciso gerar os embeddings com o código presente n ogoogle colab linkado acima.
+
 
 
 
