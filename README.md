@@ -6,6 +6,8 @@ Participantes do grupo:
 - Artur De Vlieger Lima - 13671574
 - Pedro Augusto Monteiro Delgado - 13672766
 
+[Assista ao vídeo de demonstração do projeto!](https://youtu.be/sqUDYaDMBGc)
+
 ## Sobre o Projeto
 
 Este projeto implementa um algoritmo evolutivo que utiliza **embeddings** (representações numéricas) de imagens e áudios para criar combinações de memes. O algoritmo evolui baseado nas avaliações do usuário, aplicando conceitos de algoritmos genéticos como mutação, crossover e seleção natural.
@@ -189,6 +191,7 @@ python sons.py
 - Baixa arquivos MP3 automaticamente
 
 **Nota**: Estes scripts são opcionais e usados apenas para criar o dataset inicial ou adicionar mais sons. Ainda é preciso gerar os embeddings com o código presente n ogoogle colab linkado acima.
+
 
 
 
