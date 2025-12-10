@@ -182,9 +182,7 @@ python sons.py
 - Baixa arquivos MP3 automaticamente
 
 **Nota**: Estes scripts são opcionais e usados apenas para criar o dataset inicial.
----
 
-**Divirta-se criando memes evolutivos! 🎭**
 
 
 
